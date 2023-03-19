@@ -134,6 +134,7 @@ button:hover {
 .table-rounded td,
 .table-rounded th {
   padding: 10px 15px;
+  vertical-align: bottom;
 }
 
 /* rounded textarea */
