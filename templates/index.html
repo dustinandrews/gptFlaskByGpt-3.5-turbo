@@ -2,19 +2,20 @@
 <head>
 	<title>OpenAI Chat By OpenAi</title>
 	<link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
+	<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
 </head>
 
 <body>
 	<img src="{{ url_for('static', filename='dog.png') }}" class="icon" />
 	<a href="/log">log</a>
 	<h3>ChatGPT By ChatGPT</h3>
-	<form action="/" method="post">
+	<form action="/" method="post" style="text-align: center;">
 		<label for="model">Model</label>
 		<select id="model" name="model">
 				<option value="gpt-3.5-turbo">gpt-3.5-turbo</option>
 		</select><br>
 		{% if messages %}
-		<table>
+		<table class="table-rounded">
 			<thead>
 				<tr>
 					<th>Role</th>
@@ -34,8 +35,8 @@
 		</table>
 		{% endif %}
 
-		<textarea rows="10" name="query" id="query" placeholder="Your request"></textarea><br>
+		<textarea class="textarea-rounded" rows="10" name="query" id="query" placeholder="Your request"></textarea><br>
 
-		<input type="submit" value="Generate" /><input type="submit" value="Reset" name="reset" />
+		<input class="btn-rounded" type="submit" value="Generate" /><input class="btn-rounded" type="submit" value="Reset" name="reset" />
 	</form>
 </body>
