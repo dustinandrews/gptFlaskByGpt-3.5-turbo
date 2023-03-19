@@ -1,17 +1,19 @@
 import csv
 import base64
 import tiktoken
+import shortuuid
 
 encoding = tiktoken.encoding_for_model("gpt-3.5-turbo")
 
 class DictArrayManager:
 	def __init__(self):
-		self.array = []
-		self.tokens = []
 		self.logfile = "log.csv"
-
+		self.clear()
+		
 	def clear(self):
 		self.array = []
+		self.tokens = []
+		self.sessionid = shortuuid.uuid()
 
 	def add(self, role, content):
 		self.array.append({'role': role, 'content': content})
@@ -58,7 +60,7 @@ class DictArrayManager:
 		latest = self.array[-1]
 		with open(self.logfile, mode='a', newline='') as log_file:
 			csv_writer = csv.writer(log_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-			csv_writer.writerow([latest["role"], self.encode(latest["content"])])
+			csv_writer.writerow([self.sessionid, latest["role"], self.encode(latest["content"])])
 
 	def encode(self, data):
 		content_bytes = data.encode("utf-8")

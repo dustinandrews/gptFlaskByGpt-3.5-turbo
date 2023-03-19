@@ -17,7 +17,6 @@
 		<table>
 			<thead>
 				<tr>
-					<th>Ignore</th>
 					<th>Role</th>
 					<th>Content</th>
 					<th>Tokens</th>
@@ -25,12 +24,7 @@
 			</thead>
 			<tbody>
 				{% for i in range(n) %}
-					{% if i%2==0 %}
-						<tr style="background-color: #f2f2f2;">
-					{% else %}
-						<tr>
-					{% endif %}
-						<td><input type="checkbox" id="{{ i }}" checked="true"></td>
+					<tr>
 						<td>{{ messages[i]['role'] }}</td>
 						<td><div class="pre">{{ messages[i]['content'] }}</div></td>
 						<td>{{ tokens[i] }}</td>
@@ -40,8 +34,8 @@
 		</table>
 		{% endif %}
 
-		<textarea rows="10" name="query" id="query" placeholder="Your request" required ></textarea><br>
+		<textarea rows="10" name="query" id="query" placeholder="Your request"></textarea><br>
 
-		<input type="submit" value="Generate" />
+		<input type="submit" value="Generate" /><input type="submit" value="Reset" name="reset" />
 	</form>
 </body>
