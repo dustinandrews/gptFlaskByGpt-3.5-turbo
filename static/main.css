@@ -1,0 +1,127 @@
+@font-face {
+  font-family: "ColfaxAI";
+  src: url(https://cdn.openai.com/API/fonts/ColfaxAIRegular.woff2)
+      format("woff2"),
+    url(https://cdn.openai.com/API/fonts/ColfaxAIRegular.woff) format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "ColfaxAI";
+  src: url(https://cdn.openai.com/API/fonts/ColfaxAIBold.woff2) format("woff2"),
+    url(https://cdn.openai.com/API/fonts/ColfaxAIBold.woff) format("woff");
+  font-weight: bold;
+  font-style: normal;
+}
+input {
+  font-size: 16px;
+  line-height: 24px;
+  color: #353740;
+  font-family: "ColfaxAI", Helvetica, sans-serif;
+}
+.icon {
+  width: 34px;
+}
+h3 {
+  font-size: 32px;
+  line-height: 40px;
+  font-weight: bold;
+  color: #202123;
+  margin: 16px 0 40px;
+}
+input[type="text"] {
+  padding: 12px 16px;
+  border: 1px solid #10a37f;
+  border-radius: 4px;
+  margin-bottom: 24px;
+}
+::placeholder {
+  color: #8e8ea0;
+  opacity: 1;
+}
+input[type="submit"] {
+  padding: 12px 0;
+  color: #fff;
+  background-color: #10a37f;
+  border: none;
+  border-radius: 4px;
+  text-align: center;
+  cursor: pointer;
+}
+.result {
+  font-weight: bold;
+  margin-top: 40px;
+}
+.pre
+{
+border: 1px solid #999;
+page-break-inside: avoid;
+display: block;
+padding: 3px 3px 2px;
+margin: 0 0 10px;
+font-size: 13px;
+line-height: 20px;
+word-break: break-all;
+word-wrap: break-word;
+/*white-space: pre;*/
+white-space: pre-wrap;
+background-color: #f5f5f5;
+border: 1px solid #ccc;
+border: 1px solid rgba(0, 0, 0, 0.15);
+-webkit-border-radius: 4px;
+-moz-border-radius: 4px;
+border-radius: 4px;
+font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+font-size: 12px;
+color: #333333;
+}
+
+table {
+  border-collapse: collapse;
+  width: 80%;
+  max-width: 80%;
+  overflow-x: auto;
+  margin: auto;
+}
+
+textarea {
+  width: 80%;
+  max-width: 80%; 
+  margin: auto;
+}
+
+td, th {
+  justify-self: center;
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  justify-self: center;
+  background-color: forestgreen;
+  color: white;
+  text-align: left;
+}
+
+tr:nth-child(even) {
+  background-color: forestgreen;
+  justify-items: right;
+}
+
+a {
+  color: forestgreen;
+}
+
+button {
+  background-color: forestgreen;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #2d8346;
+}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<head>
+	<title>OpenAI Chat By OpenAi</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
+</head>
+
+<body>
+	<img src="{{ url_for('static', filename='dog.png') }}" class="icon" />
+	<a href="/log">log</a>
+	<h3>ChatGPT By ChatGPT</h3>
+	<form action="/" method="post">
+		<label for="model">Model</label>
+		<select id="model" name="model">
+				<option value="gpt-3.5-turbo">gpt-3.5-turbo</option>
+		</select><br>
+		{% if messages %}
+		<table>
+			<thead>
+				<tr>
+					<th>Ignore</th>
+					<th>Role</th>
+					<th>Content</th>
+					<th>Tokens</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for i in range(n) %}
+					{% if i%2==0 %}
+						<tr style="background-color: #f2f2f2;">
+					{% else %}
+						<tr>
+					{% endif %}
+						<td><input type="checkbox" id="{{ i }}" checked="true"></td>
+						<td>{{ messages[i]['role'] }}</td>
+						<td><div class="pre">{{ messages[i]['content'] }}</div></td>
+						<td>{{ tokens[i] }}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		{% endif %}
+
+		<textarea rows="10" name="query" id="query" placeholder="Your request" required ></textarea><br>
+
+		<input type="submit" value="Generate" />
+	</form>
+</body>
