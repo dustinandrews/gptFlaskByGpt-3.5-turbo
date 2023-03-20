@@ -17,3 +17,5 @@ build/
 
 .env
 log.*
+
+openai.api_key.txt
