@@ -2,6 +2,8 @@
 
 This is a web application that allows users to chat with GPT-3.5-turbo. This project was designed by Dustin Andrews and mostly written by GPT-3.5-turbo.
 
+<img src="https://github.com/dustinandrews/gptFlaskByGpt-3.5-turbo/blob/main/static/example.png?raw=true" width="461" height="710" title="Example Chat" alt="example of chat messages"/>
+
 ## Audience
 - Anyone who wants to expirement with the GPT-3.5-turbo API in Python and Flask
 - Anyone who wants to use thier own gpt-3.5-turbo API Key locally
