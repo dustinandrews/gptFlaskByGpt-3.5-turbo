@@ -1,5 +1,3 @@
-import os
-import json
 import openai
 from flask import Flask, redirect, render_template, request, url_for
 import csv
@@ -7,7 +5,7 @@ import base64
 import sys
 import traceback
 from lib import DictArrayManager
-import shortuuid
+import importlib
 
 app = Flask(__name__)
 app.jinja_env.auto_reload = True
@@ -21,29 +19,32 @@ messages.add("system", "You are a helpful assistant")
 def index():
     if request.method == "POST":
         if  'reset' in request.form:
-            print("reset")
-            messages.clear()
-            messages.add("system", "You are a helpful assistant")
+            reset()
         elif len(request.form["query"]) > 0:
-            print(request.form["query"])
             return process_request(request)
-
     return render_template("index.html", anchor='query', messages=messages.array, tokens=messages.tokens, n=len(messages.array))
+
+def reset():
+    # Reload openai module
+    importlib.reload(openai)
+    messages.clear()
+    messages.add("system", "You are a helpful assistant")
+    return redirect(url_for('index', _anchor='query'))
 
 def process_request(request):
     model = request.form["model"]
     messages.add("user", request.form["query"])
+    messages.truncate(1024)
     try:
         response = openai.ChatCompletion.create(model=model, messages=messages.array)
         repsonse_message = response.choices[0].message["content"]
         messages.add("assistant", repsonse_message)
     except Exception as e:
+        print("handled exception")
         exc_type, exc_value, exc_traceback = sys.exc_info()
         lines = traceback.format_exception(exc_type, exc_value, exc_traceback)
-        messages.add("error", "ERROR:\n" + (''.join('!! ' + line for line in lines)))
-    
+        messages.add("system", "ERROR:\n" + (''.join('!! ' + line for line in lines)))
     return redirect(url_for('index', _anchor='query'))
-
 
 @app.route('/log')
 def view_log():

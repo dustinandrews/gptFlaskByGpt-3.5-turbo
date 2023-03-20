@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <head>
-	<title>OpenAI Chat By OpenAi</title>
+	<title>OpenAI Chat By GPT-3.5-Turbo</title>
 	<link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
 	<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 </head>
 
 <body>
@@ -12,9 +13,11 @@
 	<form action="/" method="post" style="text-align: center;">
 		<label for="model">Model</label>
 		<select id="model" name="model">
-				<option value="gpt-3.5-turbo">gpt-3.5-turbo</option>
+			<option value="gpt-3.5-turbo">gpt-3.5-turbo</option>
 		</select><br>
+
 		{% if messages %}
+
 		<table class="table-rounded">
 			<thead>
 				<tr>
@@ -25,18 +28,37 @@
 			</thead>
 			<tbody>
 				{% for i in range(n) %}
-					<tr>
-						<td>{{ messages[i]['role'] }}</td>
-						<td><div class="pre">{{ messages[i]['content'] }}</div></td>
-						<td>{{ tokens[i] }}</td>
-					</tr>
+				<tr>
+					<td>{{ messages[i]['role'] }}</td>
+					<td>
+						<div class="pre">{{ messages[i]['content'] }}</div>
+					</td>
+					<td>{{ tokens[i] }}</td>
+				</tr>
 				{% endfor %}
+
 			</tbody>
 		</table>
+
 		{% endif %}
 
 		<textarea class="textarea-rounded" rows="10" name="query" id="query" placeholder="Your request"></textarea><br>
 
-		<input class="btn-rounded" type="submit" value="Generate" /><input class="btn-rounded" type="submit" value="Reset" name="reset" />
+		<input class="btn-rounded" type="submit" value="Generate" id="generateBtn" /><input class="btn-rounded" type="submit"
+			value="Reset" name="reset" />
+
+		<div class="loading" style="display:none;">Loading...</div>
 	</form>
+
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script>
+	$('form').submit(function(){
+		// Disable the button
+		$('#generateBtn').prop("disabled", true);
+		$('#generateBtn').style.visibility = 'hidden'
+		// Show the loading indicator
+		$(".loading").show();
+	});
+	</script>
+
 </body>
