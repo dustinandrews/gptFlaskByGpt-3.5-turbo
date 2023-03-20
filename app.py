@@ -6,6 +6,7 @@ import traceback
 from lib import DictArrayManager
 import importlib
 import os
+import csv
 
 app = Flask(__name__)
 app.jinja_env.auto_reload = True
@@ -76,5 +77,5 @@ def is_base64(s):
             return False
     except:
         return False
-    
+
 reset()
