@@ -13,6 +13,8 @@ A simple flask app that will allow you to converse with chatgpt-3.5-turbo.
 - Logs your conversations with a unique id
 - Log viewer page
 
+![Example of chat](static/example.png)
+
 ## Installation
 
 ### Requirements

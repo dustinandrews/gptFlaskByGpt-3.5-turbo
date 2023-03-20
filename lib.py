@@ -2,6 +2,7 @@ import csv
 import base64
 import tiktoken
 import shortuuid
+import os
 
 encoding = tiktoken.encoding_for_model("gpt-3.5-turbo")
 
@@ -9,7 +10,7 @@ class DictArrayManager:
 	def __init__(self):
 		self.logfile = "log.csv"
 		self.clear()
-		
+
 	def clear(self):
 		self.array = []
 		self.tokens = []
@@ -57,6 +58,10 @@ class DictArrayManager:
 			raise ValueError("Invalid JSON string format")
 
 	def log_latest(self):
+		if not os.path.exists(self.logfile):
+			with open(self.logfile, mode='a', newline='') as log_file:
+				csv_writer = csv.writer(log_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+				csv_writer.writerow(["id","role","message"])
 		latest = self.array[-1]
 		with open(self.logfile, mode='a', newline='') as log_file:
 			csv_writer = csv.writer(log_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
