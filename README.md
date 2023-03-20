@@ -1,6 +1,10 @@
 # ChatGPT Flask App by ChatGPT-3.5-turbo
 
-This is a web application that allows users to chat with GPT-3.5-turbo. This project was designed by [your name] and mostly written by GPT-3.5-turbo.
+This is a web application that allows users to chat with GPT-3.5-turbo. This project was designed by Dustin Andrews and mostly written by GPT-3.5-turbo.
+
+## Audience
+- Anyone who wants to expirement with the GPT-3.5-turbo API in Python and Flask
+- Anyone who wants to use thier own gpt-3.5-turbo API Key locally
 
 ## Features
 
