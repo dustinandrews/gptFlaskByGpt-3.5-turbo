@@ -2,6 +2,13 @@
 
 This is a web application that allows users to chat with GPT-3.5-turbo. This project was designed by [your name] and mostly written by GPT-3.5-turbo.
 
+## Features
+
+A simple flask app that will allow you to converse with chatgpt-3.5-turbo. 
+- Automatically include up to the last 1024 tokens worth of history
+- Logs your conversations with a unique id
+- Log viewer page
+
 ## Installation
 
 ### Requirements
@@ -48,8 +55,16 @@ This is a web application that allows users to chat with GPT-3.5-turbo. This pro
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+This project is licensed under the MIT License
 
-### Conclusion
+## Motivation
 
-Enjoy
+I was looking for a simple ChatGpt client I could use with gtp-3.5-turbo. I prefered flask because it's simple to use and run for experimental purposes.
+
+I also wanted to test out chat-gpt. It wrote 90% of the code in response to my questions.
+
+## Known Issues
+
+After around 20-30 messages OpenApi will timeout. This seems to be due to the openai library doing something odd. Use the reset button to start over.
+
+## Wishlist
