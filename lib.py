@@ -11,6 +11,16 @@ class DictArrayManager:
 		self.logfile = "log.csv"
 		self.clear()
 
+	def get_recent_history(self, tokens):
+			result = []
+			total = 0
+			for i in range(len(self.history)-1,0,-1):
+				if total >= tokens:
+					break
+				result.append(self.history[i])
+				total += self.token_history[i]
+			return list(reversed(result))
+
 	def clear(self):
 		self.array = []
 		self.history = []
@@ -41,9 +51,13 @@ class DictArrayManager:
 		return count
 
 	def truncate(self, num):
+		did_truncate = False
 		while self.count() > num:
-			self.history = self.array.pop(0)
-			self.token_history = self.tokens.pop(0)
+			self.history.append(self.array.pop(1))
+			self.token_history.append(self.tokens.pop(1))
+			print(self.history[-1])
+			did_truncate = True
+		return did_truncate
 
 	def log_latest(self):
 		if not os.path.exists(self.logfile):

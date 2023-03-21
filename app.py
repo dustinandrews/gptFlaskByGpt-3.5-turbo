@@ -20,7 +20,7 @@ openai.api_key = OPENAI_API_KEY
 
 # Set the number of past tokens to send with the current query
 # rounds to the nearest whole message
-history_max_tokens = 1024
+history_max_tokens = 100
 
 messages = DictArrayManager()
 
@@ -31,7 +31,15 @@ def index():
 			reset()
 		elif len(request.form["query"]) > 0:
 			return process_request(request)
-	return render_template("index.html", anchor='query', messages=messages.array, tokens=messages.tokens, n=len(messages.array))
+	return render_template(
+		"index.html",
+		anchor='query',
+		messages=messages.array,
+		tokens=messages.tokens,
+		n=len(messages.array),
+		history=messages.history,
+		history_tokens=messages.token_history,
+		h=len(messages.history))
 
 def reset():
 	# Reload openai module
@@ -43,7 +51,7 @@ def reset():
 def process_request(request):
 	model = request.form["model"]
 	messages.add("user", request.form["query"])
-	messages.truncate(history_max_tokens)
+	truncate_and_summarize()
 	try:
 		response = openai.ChatCompletion.create(model=model, messages=messages.array)
 		response_message = response.choices[0].message["content"]
@@ -55,6 +63,14 @@ def process_request(request):
 		messages.add("system", "ERROR:\n" + stack)
 		print("handled exception\n", stack)
 	return redirect(url_for('index', _anchor='query'))
+
+def truncate_and_summarize():
+	if (messages.truncate(history_max_tokens)):
+		recent = messages.get_recent_history(history_max_tokens)
+		print("recent messages len = ", len(recent))
+		recent.append({"role":"user", "content": ""})
+
+
 
 @app.route('/log')
 def view_log():

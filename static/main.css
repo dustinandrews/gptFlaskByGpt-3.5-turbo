@@ -109,7 +109,7 @@ th {
   text-align: left;
 }
 
-tr:nth-child(even) {
+.table-rounded tr:nth-child(even) {
   background-color: forestgreen;
   color: whitesmoke;
   justify-items: right;
@@ -147,6 +147,48 @@ button:hover {
   width: 100%;
   box-sizing: border-box;
   margin-bottom: 10px;
+}
+/* common styles */
+:root {
+  --border-radius: 10px;
+  --box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  --padding: 10px 15px;
+}
+
+/* table styles */
+.table-rounded {
+  border-collapse: collapse;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: var(--box-shadow);
+}
+
+.table-rounded td,
+.table-rounded th {
+  padding: var(--padding);
+  vertical-align: bottom;
+}
+
+/* textarea styles */
+.textarea-rounded {
+  border-radius: var(--border-radius);
+  border: none;
+  box-shadow: var(--box-shadow);
+  padding: var(--padding);
+  font-size: 16px;
+  resize: none;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+/* gray background styles */
+.table-rounded-gray {
+  border-collapse: collapse;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: var(--box-shadow);
+  background-color: gray;
 }
 
 /* rounded button */

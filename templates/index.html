@@ -16,6 +16,33 @@
 			<option value="gpt-3.5-turbo">gpt-3.5-turbo</option>
 		</select><br>
 
+		{% if history | length > 0 %}
+
+		<table class="table-rounded-gray">
+			<thead>
+				<tr>
+					<th>Role</th>
+					<th>History Content</th>
+					<th>Tokens</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for i in range(h) %}
+				<tr>
+					<td>{{ history[i]['role'] }}</td>
+					<td>
+						<div class="pre">{{ history[i]['content'] }}</div>
+					</td>
+					<td>{{ history_tokens[i] }}</td>
+				</tr>
+				{% endfor %}
+
+			</tbody>
+		</table>
+
+		{% endif %}
+
+
 		{% if messages %}
 
 		<table class="table-rounded">
