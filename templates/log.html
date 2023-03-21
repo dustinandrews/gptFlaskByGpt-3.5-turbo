@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>OpenAI Chatbot Log</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
+    </style>
+</head>
+<body>
+    <h3>OpenAI Chatbot Log</h3>
+    <a href="/">home</a>
+    <table>
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>Role</th>
+                <th>Query</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for log in log_lines %}
+            <tr>
+                <td>{{ log['id'] }}</td>
+                <td>{{ log['role'] }}</td>
+                <td class="pre">{{ log['message'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

@@ -17,6 +17,6 @@ build/
 .DS_STORE
 
 .env
-log.*
+log.csv
 
 openai.api_key.txt

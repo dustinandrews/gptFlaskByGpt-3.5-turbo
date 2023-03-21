@@ -13,7 +13,9 @@ class DictArrayManager:
 
 	def clear(self):
 		self.array = []
+		self.history = []
 		self.tokens = []
+		self.token_history = []
 		self.sessionid = shortuuid.uuid()
 
 	def add(self, role, content):
@@ -40,22 +42,8 @@ class DictArrayManager:
 
 	def truncate(self, num):
 		while self.count() > num:
-			self.array = self.array[1:]
-
-	def serialize(self):
-		import json
-		return json.dumps(self.array)
-
-	def deserialize(self, json_string):
-		import json
-		try:
-			deserialized = json.loads(json_string)
-			for item in deserialized:
-				if set(item.keys()) != {'role', 'content'}:
-					raise ValueError("Invalid dictionary format")
-			self.array = deserialized
-		except json.JSONDecodeError:
-			raise ValueError("Invalid JSON string format")
+			self.history = self.array.pop(0)
+			self.token_history = self.tokens.pop(0)
 
 	def log_latest(self):
 		if not os.path.exists(self.logfile):
@@ -72,3 +60,24 @@ class DictArrayManager:
 		base64_byte = base64.b64encode(content_bytes)
 		base64_string = base64_byte.decode("utf-8")
 		return base64_string
+
+	def get_log(self):
+		log_lines = []
+		with open('log.csv', newline='') as log_file:
+			csv_reader = csv.DictReader(log_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+			for row in csv_reader:
+				for i in row:
+					if self.is_base64(row[i]):
+						row[i] = base64.b64decode(row[i]).decode("utf-8")
+				log_lines.append(row)
+		return log_lines
+
+	def is_base64(self, s):
+		try:
+			decoded_string = base64.b64decode(s).decode("utf-8")
+			if self.encode(decoded_string) == s:
+				return True
+			else:
+				return False
+		except:
+			return False
