@@ -20,7 +20,7 @@ openai.api_key = OPENAI_API_KEY
 
 # Set the number of past tokens to send with the current query
 # rounds to the nearest whole message
-history_max_tokens = 100
+history_max_tokens = 1024
 
 messages = DictArrayManager()
 
@@ -51,8 +51,9 @@ def reset():
 def process_request(request):
 	model = request.form["model"]
 	messages.add("user", request.form["query"])
-	truncate_and_summarize()
+	
 	try:
+		truncate_and_summarize(model)
 		response = openai.ChatCompletion.create(model=model, messages=messages.array)
 		response_message = response.choices[0].message["content"]
 		messages.add("assistant", response_message)
@@ -64,11 +65,17 @@ def process_request(request):
 		print("handled exception\n", stack)
 	return redirect(url_for('index', _anchor='query'))
 
-def truncate_and_summarize():
+def truncate_and_summarize(model):
 	if (messages.truncate(history_max_tokens)):
 		recent = messages.get_recent_history(history_max_tokens)
 		print("recent messages len = ", len(recent))
-		recent.append({"role":"user", "content": ""})
+		recent.append({"role":"user", "content": "Please tersely summarize the conversation in a way that provides context for picking up later."})
+		response = openai.ChatCompletion.create(model=model, messages=recent)
+		response_message = response.choices[0].message["content"]		
+		summary = {"role":"assistant", "content": response_message}
+		messages.array.insert(1, summary)
+
+
 
 
 
