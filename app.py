@@ -75,10 +75,6 @@ def truncate_and_summarize(model):
 		summary = {"role":"assistant", "content": response_message}
 		messages.array.insert(1, summary)
 
-
-
-
-
 @app.route('/log')
 def view_log():
 	log_lines = messages.get_log()
