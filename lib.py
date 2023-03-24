@@ -11,16 +11,6 @@ class DictArrayManager:
 		self.logfile = "log.csv"
 		self.clear()
 
-	def get_recent_history(self, tokens):
-			result = []
-			total = 0
-			for i in range(len(self.history)-1,0,-1):
-				if total >= tokens:
-					break
-				result.append(self.history[i])
-				total += self.token_history[i]
-			return list(reversed(result))
-
 	def clear(self):
 		self.array = []
 		self.history = []
@@ -50,7 +40,30 @@ class DictArrayManager:
 				count += len(value.split())
 		return count
 
+
+	# If the messages array is bigger than num tokens
+	# remove from the second message to the second to last
+	# message until the token value of the removed messages is
+	# greater than or equal to num
 	def truncate(self, num):
+		size = 0
+		removed = []
+		removed_t = []		
+		if sum(self.tokens[1:-1]) > num:			
+			for i in range(len(self.array) - 2):
+				removed.append(self.array.pop(1))
+				t = self.tokens.pop(1)
+				removed_t.append(t)
+				size += t
+				if size > num:
+					break
+		self.history += removed
+		self.token_history += removed_t
+		return removed
+
+
+
+
 		did_truncate = False
 		while self.count() > num:
 			self.history.append(self.array.pop(1))

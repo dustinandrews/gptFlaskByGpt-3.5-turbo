@@ -19,8 +19,14 @@ if not OPENAI_API_KEY:
 openai.api_key = OPENAI_API_KEY
 
 # Set the number of past tokens to send with the current query
-# rounds to the nearest whole message
-history_max_tokens = 1024
+# rounds to the nearest whole message. Extras will be summarized.
+history_max_tokens = 2048
+
+ai_role = """You are a helpful but somewhat terse assistant who is as specific as possible. 
+You avoid generalities and prefer to give concrete examples when possible.
+You avoid over explaining your responses.
+I am a technically proficient programmer with a wide array of knowledge about computers.
+I do not require basic explanations of code or instructions."""
 
 messages = DictArrayManager()
 
@@ -46,7 +52,7 @@ def reset():
 	importlib.reload(openai)
 	openai.api_key = OPENAI_API_KEY
 	messages.clear()
-	messages.add("system", "You are a helpful assistant")
+	messages.add("system", ai_role)
 
 def process_request(request):
 	model = request.form["model"]
@@ -66,8 +72,9 @@ def process_request(request):
 	return redirect(url_for('index', _anchor='query'))
 
 def truncate_and_summarize(model):
-	if (messages.truncate(history_max_tokens)):
-		recent = messages.get_recent_history(history_max_tokens)
+	recent = messages.truncate(history_max_tokens)
+	print(recent)
+	if len(recent) > 0:		
 		print("recent messages len = ", len(recent))
 		recent.append({"role":"user", "content": "Please tersely summarize the conversation in a way that provides context for picking up later."})
 		response = openai.ChatCompletion.create(model=model, messages=recent)
